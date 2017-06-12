@@ -1,0 +1,234 @@
+﻿@{
+    Validation.RequireField("Name", "You must enter your name.");
+    Validation.RequireField("Width", "You must enter a width.");
+    Validation.RequireField("Depth", "You must enter a depth.");
+    Validation.RequireField("Drawers", "You must select the number of drawers.");
+    Validation.RequireField("Material", "You must choose a material");
+    Validation.RequireField("Shipping", "You choose shipping terms.");
+
+
+    var customerName = "";
+    var deskWidth = "";
+    var deskDepth = "";
+    var numDrawer = "";
+    var deskMaterial = "";
+    var shipDays = "";
+
+    var orderCost = "";
+
+    if (IsPost && Validation.IsValid())
+    {
+        customerName = Request.Form["Name"];
+        deskWidth = Request.Form["Width"];
+        deskDepth = Request.Form["Depth"];
+        numDrawer = Request.Form["Drawers"];
+        deskMaterial = Request.Form["Material"];
+        shipDays = Request.Form["Shipping"];
+        orderCost = Request.Form["Cost"];
+
+
+        int area = Convert.ToInt32(deskWidth) * Convert.ToInt32(deskDepth);
+
+        int basePrice = 200;
+
+        int drawerCost = Convert.ToInt32(numDrawer) * 50;
+
+        int deskAreaPremium = area - 1000;
+
+        if (deskAreaPremium < 0)
+        {
+            deskAreaPremium = 0;
+        }
+
+        int materialCharge = 0;
+
+        switch (deskMaterial)
+        {
+            case "Oak":
+                {
+                    materialCharge = 200;
+                }
+                break;
+
+            case "Laminate":
+                {
+                    materialCharge = 100;
+                }
+                break;
+
+            case "Pine":
+                {
+                    materialCharge = 50;
+                }
+                break;
+
+            case "Ebony":
+                {
+                    materialCharge = 225;
+                }
+                break;
+
+            case "Maple":
+                {
+                    materialCharge = 240;
+                }
+                break;
+
+            case "Cherry":
+                {
+                    materialCharge = 275;
+                }
+                break;
+        }
+
+        int shipCharge = 0;
+
+        switch (shipDays)
+        {
+            case "3":
+                {
+                    if (area < 1000)
+                    {
+                        shipCharge = 60;
+                    }
+                    else if ((area >= 1001) && (area <= 1999))
+                    {
+                        shipCharge = 70;
+                    }
+                    else
+                    {
+                        shipCharge = 80;
+                    }
+                }
+                break;
+
+            case "5":
+                {
+                    if (area < 1000)
+                    {
+                        shipCharge = 40;
+                    }
+                    else if ((area >= 1000) && (area <= 1999))
+                    {
+                        shipCharge = 50;
+                    }
+                    else
+                    {
+                        shipCharge = 60;
+                    }
+                }
+                break;
+
+            case "7":
+                {
+                    if (area < 1000)
+                    {
+                        shipCharge = 30;
+                    }
+                    else if ((area >= 1001) && (area <= 1999))
+                    {
+                        shipCharge = 30;
+                    }
+                    else
+                    {
+                        shipCharge = 40;
+                    }
+                }
+                break;
+
+            case "14":
+                {
+                    shipCharge = 0;
+                }
+                break;
+        }
+
+
+        int quoteCost = basePrice + deskAreaPremium + drawerCost + materialCharge + shipCharge;
+
+        var db = Database.Open("MegaEscritorioOrders");
+        var insertCommand = "INSERT INTO Orders (Name, Width, Depth, Drawers, Material, Shipping, Date, Cost) VALUES(@0, @1, @2, @3, @4, @5, @6, @7)";
+        db.Execute(insertCommand, customerName, deskWidth, deskDepth, numDrawer, deskMaterial, shipDays, DateTime.Now, quoteCost);
+
+        Response.Redirect("~/MegaEscritorio");
+    }
+
+
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Add an Order</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+    <h1>Add a Desk Order</h1>
+    <form method="post">
+        <fieldset>
+            <legend>Desk Information</legend>
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="name">Customer Name:</label></div>
+                <input type="text" id="name" name="name" value="@Request.Form["Name"]" />
+                @Html.ValidationMessage("Name")
+            </div>
+
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="width">Width:</label></div>
+                <input type="text" id="width" name="width" value="@Request.Form["Width"]" />
+                @Html.ValidationMessage("Width")
+            </div>
+
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="depth">Depth:</label></div>
+                <input type="text" id="depth" name="depth" value="@Request.Form["Depth"]" />
+                @Html.ValidationMessage("Depth")
+            </div>
+
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="drawers">Number of Drawers:</label></div>
+                <input type="number" id="drawers" name="drawers" value="@Request.Form["Drawers"]" min="0" max="7"/>
+                @Html.ValidationMessage("Drawers")
+            </div>
+
+            <div class="radio-panel">
+                <div class="radiowrap">
+                    <fieldset>
+                        <legend>Desk Materials:</legend>
+                        <input type="radio" id="material" name="material" value="Oak" /> Oak<br />
+                        <input type="radio" id="material" name="material" value="Laminate" /> Laminate<br />
+                        <input type="radio" id="material" name="material" value="Pine" checked /> Pine<br />
+                        <input type="radio" id="material" name="material" value="Ebony" /> Ebony<br />
+                        <input type="radio" id="material" name="material" value="Maple" /> Maple<br />
+                        <input type="radio" id="material" name="material" value="Cherry" /> Cherry
+                        @Html.ValidationMessage("Material")
+                    </fieldset>
+                </div>
+
+
+                <div class="radiowrap">
+                    <fieldset>
+                        <legend>Shipping Terms:</legend>
+                        <input type="radio" id="shipping" name="shipping" value="3" /> 3 Days<br />
+                        <input type="radio" id="shipping" name="shipping" value="5" /> 5 Days<br />
+                        <input type="radio" id="shipping" name="shipping" value="7" /> 7 Days<br />
+                        <input type="radio" id="shipping" name="shipping" value="14" checked /> 14 Days<br />
+                        @Html.ValidationMessage("Shipping")
+                    </fieldset>
+                </div>
+            </div>
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="shipping">Total Cost:</label></div>
+                <input type="text" id="cost" name="cost" value="@Request.Form["Cost"]" readonly />
+                @Html.ValidationMessage("Cost")
+            </div>
+
+
+            <p><input type="submit" name="buttonSubmit" value="Add Order" /></p>
+        </fieldset>
+    </form>
+    <p><a href="~/MegaEscritorio">Return to order listing</a></p>
+
+</body>
+</html>
