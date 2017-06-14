@@ -12,7 +12,7 @@
 
     if (!Request.QueryString["searchMaterial"].IsEmpty())
     {
-        selectCommand = "SELECT * FROM Order WHERE Material LIKE @0";
+        selectCommand = "SELECT * FROM Orders WHERE Material LIKE @0";
         searchTerm = "%" + Request["searchMaterial"] + "%";
     }
 

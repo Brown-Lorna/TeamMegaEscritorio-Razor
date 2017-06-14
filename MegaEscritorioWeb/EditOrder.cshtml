@@ -1,9 +1,377 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var name = "";
+    var deskWidth = 0;
+    var deskDepth = 0;
+    var numDrawer = 0;
+    var deskMaterial = "";
+    var shipDays = 0;
+    double cost = 0.0;
+    var orderId = "";
+    var date = "";
+
+    var OakCheckedMsg = "";
+    var LamCheckedMsg = "";
+    var PineCheckedMsg = "";
+    var EbonyCheckedMsg = "";
+    var MapleCheckedMsg = "";
+    var CherryCheckedMsg = "";
+
+    var ThreeCheckedMsg = "";
+    var FiveCheckedMsg = "";
+    var SevenCheckedMsg = "";
+    var FourteenCheckedMsg = "";
+
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+        {
+            orderId = Request.QueryString["ID"];
+            var db = Database.Open("MegaEscritorioOrders");
+            var dbCommand = "SELECT * FROM Orders WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, orderId);
+            name = row.Name;
+            deskWidth = Convert.ToInt32(row.Width);
+            deskDepth = Convert.ToInt32(row.Depth);
+            numDrawer = Convert.ToInt32(row.Drawers);
+            deskMaterial = row.Material;
+            shipDays = Convert.ToInt32(row.Shipping);
+            cost = Convert.ToDouble(row.Cost);
+            date = Convert.ToString(row.Date);
+
+            switch (deskMaterial)
+            {
+                case "Oak":
+                    {
+                        OakCheckedMsg = "checked";
+                    }
+                    break;
+                case "Laminate":
+                    {
+                        LamCheckedMsg = "checked";
+                    }
+                    break;
+                case "Pine":
+                    {
+                        PineCheckedMsg = "checked";
+                    }
+                    break;
+                case "Ebony":
+                    {
+                        EbonyCheckedMsg = "checked";
+                    }
+                    break;
+                case "Maple":
+                    {
+                        MapleCheckedMsg = "checked";
+                    }
+                    break;
+                case "Cherry":
+                    {
+                        CherryCheckedMsg = "checked";
+                    }
+                    break;
+            }
+
+            switch (shipDays)
+            {
+                case 3:
+                    {
+                        ThreeCheckedMsg = "checked";
+                    }
+                    break;
+                case 5:
+                    {
+                        FiveCheckedMsg = "checked";
+                    }
+                    break;
+                case 7:
+                    {
+                        SevenCheckedMsg = "checked";
+                    }
+                    break;
+                case 14:
+                    {
+                        FourteenCheckedMsg = "checked";
+                    }
+                    break;
+
+            }
+
+
+
+            if (row != null)
+            {
+                name = row.Name;
+                deskWidth = Convert.ToInt32(row.Width);
+                deskDepth = Convert.ToInt32(row.Depth);
+                numDrawer = Convert.ToInt32(row.Drawers);
+                deskMaterial = row.Material;
+                shipDays = Convert.ToInt32(row.Shipping);
+                cost = Convert.ToDouble(row.Cost);
+                date = Convert.ToString(row.Date);
+            }
+            else
+            {
+                Validation.AddFormError("No order was found for that ID.");
+            }
+
+        }
+        else
+        {
+            Validation.AddFormError("No order was selected.");
+        }
+    }
+
+    if (IsPost)
+    {
+        Validation.RequireField("Name", "You must enter your name.");
+        Validation.RequireField("Width", "You must enter a width.");
+        Validation.RequireField("Depth", "You must enter a depth.");
+        Validation.RequireField("Drawers", "You must select the number of drawers.");
+        Validation.RequireField("Material", "You must choose a material");
+        Validation.RequireField("Shipping", "You must choose shipping terms.");
+        Validation.RequireField("Cost", "There is an issue with the order cost.");
+
+
+
+        if (Validation.IsValid())
+        {
+            name = Request.Form["name"];
+            deskWidth = Convert.ToInt32(Request.Form["width"]);
+            deskDepth = Convert.ToInt32(Request.Form["depth"]);
+            numDrawer = Convert.ToInt32(Request.Form["drawers"]);
+            deskMaterial = Request.Form["material"];
+            shipDays = Convert.ToInt32(Request.Form["shipping"]);
+            cost = Convert.ToDouble(Request.Form["cost"]);
+            date = Request.Form["date"];
+            orderId = Request.Form["orderId"];
+
+
+
+            int area = Convert.ToInt32(deskWidth) * Convert.ToInt32(deskDepth);
+
+            int basePrice = 200;
+
+            int drawerCost = Convert.ToInt32(numDrawer) * 50;
+
+            int deskAreaPremium = area - 1000;
+
+            if (deskAreaPremium < 0)
+            {
+                deskAreaPremium = 0;
+            }
+
+            int materialCharge = 0;
+
+            switch (deskMaterial)
+            {
+                case "Oak":
+                    {
+                        materialCharge = 200;
+                        OakCheckedMsg = "checked";
+                    }
+                    break;
+
+                case "Laminate":
+                    {
+                        materialCharge = 100;
+                        LamCheckedMsg = "checked";
+                    }
+                    break;
+
+                case "Pine":
+                    {
+                        materialCharge = 50;
+                        PineCheckedMsg = "checked";
+                    }
+                    break;
+
+                case "Ebony":
+                    {
+                        materialCharge = 225;
+                        EbonyCheckedMsg = "checked";
+                    }
+                    break;
+
+                case "Maple":
+                    {
+                        materialCharge = 240;
+                        MapleCheckedMsg = "checked";
+                    }
+                    break;
+
+                case "Cherry":
+                    {
+                        materialCharge = 275;
+                        CherryCheckedMsg = "checked";
+                    }
+                    break;
+            }
+
+            int shipCharge = 0;
+
+            switch (shipDays)
+            {
+                case 3:
+                    {
+                        if (area < 1000)
+                        {
+                            shipCharge = 60;
+                        }
+                        else if ((area >= 1001) && (area <= 1999))
+                        {
+                            shipCharge = 70;
+                        }
+                        else
+                        {
+                            shipCharge = 80;
+                        }
+
+                        ThreeCheckedMsg = "checked";
+
+                    }
+                    break;
+
+                case 5:
+                    {
+                        if (area < 1000)
+                        {
+                            shipCharge = 40;
+                        }
+                        else if ((area >= 1000) && (area <= 1999))
+                        {
+                            shipCharge = 50;
+                        }
+                        else
+                        {
+                            shipCharge = 60;
+                        }
+
+                        FiveCheckedMsg = "checked";
+
+                    }
+                    break;
+
+                case 7:
+                    {
+                        if (area < 1000)
+                        {
+                            shipCharge = 30;
+                        }
+                        else if ((area >= 1001) && (area <= 1999))
+                        {
+                            shipCharge = 30;
+                        }
+                        else
+                        {
+                            shipCharge = 40;
+                        }
+
+                        SevenCheckedMsg = "checked";
+                    }
+
+                    break;
+
+                case 14:
+                    {
+                        shipCharge = 0;
+                        FourteenCheckedMsg = "checked";
+                    }
+                    break;
+            }
+
+
+            int quoteCost = basePrice + deskAreaPremium + drawerCost + materialCharge + shipCharge;
+
+
+            var db = Database.Open("MegaEscritorioOrders");
+            var updateCommand = "UPDATE Orders SET Name=@0, Width=@1, Depth=@2, Drawers=@3, Material=@4, Shipping=@5, Cost=@6, Date=@7  WHERE ID=@8";
+            db.Execute(updateCommand, name, deskWidth, deskDepth, numDrawer, deskMaterial, shipDays, quoteCost, DateTime.Now, orderId);
+            Response.Redirect("~/MegaEscritorio");
+        }
+    }
+
+}
+<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <meta charset="utf-8" />
+    <title>Edit an Order</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
+    <h1>Edit an Order</h1>
+    @Html.ValidationSummary()
+    <form method="post">
+        <fieldset>
+            <legend>Order Information</legend>
+
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="name">Customer Name:</label></div>
+                <input type="text" id="name" name="name" value="@name" />
+                @Html.ValidationMessage("Name")
+            </div>
+
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="width">Width:</label></div>
+                <input type="text" id="width" name="width" value="@deskWidth" />
+                @Html.ValidationMessage("Width")
+            </div>
+
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="depth">Depth:</label></div>
+                <input type="text" id="depth" name="depth" value="@deskDepth" />
+                @Html.ValidationMessage("Depth")
+            </div>
+
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="drawers">Number of Drawers:</label></div>
+                <input type="number" id="drawers" name="drawers" value="@numDrawer" min="0" max="7" />
+                @Html.ValidationMessage("Drawers")
+            </div>
+
+
+            <div class="radio-panel">
+                <div class="radiowrap">
+                    <fieldset>
+                        <legend>Desk Materials:</legend>
+                        <input type="radio" id="material" name="material" value="Oak" @OakCheckedMsg/> Oak<br />
+                        <input type="radio" id="material" name="material" value="Laminate" @LamCheckedMsg/> Laminate<br />
+                        <input type="radio" id="material" name="material" value="Pine" @PineCheckedMsg/> Pine<br />
+                        <input type="radio" id="material" name="material" value="Ebony" @EbonyCheckedMsg/> Ebony<br />
+                        <input type="radio" id="material" name="material" value="Maple" @MapleCheckedMsg/> Maple<br />
+                        <input type="radio" id="material" name="material" value="Cherry" @CherryCheckedMsg/> Cherry
+                        @Html.ValidationMessage("Material")
+                    </fieldset>
+                </div>
+
+
+                <div class="radiowrap">
+                    <fieldset>
+                        <legend>Shipping Terms:</legend>
+                        <input type="radio" id="shipping" name="shipping" value="3" @ThreeCheckedMsg /> 3 Days<br />
+                        <input type="radio" id="shipping" name="shipping" value="5" @FiveCheckedMsg /> 5 Days<br />
+                        <input type="radio" id="shipping" name="shipping" value="7" @SevenCheckedMsg /> 7 Days<br />
+                        <input type="radio" id="shipping" name="shipping" value="14" @FourteenCheckedMsg /> 14 Days<br />
+                        @Html.ValidationMessage("Shipping")
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="inputwrap">
+                <div class="labelwrap"><label for="cost">Order Cost:</label></div>
+                <input type="text" id="cost" name="cost" value="@cost" />
+                @Html.ValidationMessage("Drawers")
+            </div>
+
+            <input type="hidden" name="orderId" value="@orderId" />
+
+            <p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
+        </fieldset>
+    </form>
+
+    <p><a href="~/MegaEscritorio">Return to scripture listing</a></p>
 
 </body>
 </html>
