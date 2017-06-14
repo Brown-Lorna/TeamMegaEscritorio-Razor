@@ -4,7 +4,7 @@
     Validation.RequireField("Depth", "You must enter a depth.");
     Validation.RequireField("Drawers", "You must select the number of drawers.");
     Validation.RequireField("Material", "You must choose a material");
-    Validation.RequireField("Shipping", "You choose shipping terms.");
+    Validation.RequireField("Shipping", "You must choose shipping terms.");
 
 
     var customerName = "";
@@ -15,6 +15,7 @@
     var shipDays = "";
 
     var orderCost = "";
+
 
     if (IsPost && Validation.IsValid())
     {
@@ -27,6 +28,7 @@
         orderCost = Request.Form["Cost"];
 
 
+
         int area = Convert.ToInt32(deskWidth) * Convert.ToInt32(deskDepth);
 
         int basePrice = 200;
@@ -36,9 +38,9 @@
         int deskAreaPremium = area - 1000;
 
         if (deskAreaPremium < 0)
-        {
-            deskAreaPremium = 0;
-        }
+            {
+                deskAreaPremium = 0;
+            }
 
         int materialCharge = 0;
 
@@ -151,9 +153,8 @@
         db.Execute(insertCommand, customerName, deskWidth, deskDepth, numDrawer, deskMaterial, shipDays, DateTime.Now, quoteCost);
 
         Response.Redirect("~/MegaEscritorio");
+
     }
-
-
 
 }
 <!DOCTYPE html>
@@ -198,7 +199,7 @@
                         <legend>Desk Materials:</legend>
                         <input type="radio" id="material" name="material" value="Oak" /> Oak<br />
                         <input type="radio" id="material" name="material" value="Laminate" /> Laminate<br />
-                        <input type="radio" id="material" name="material" value="Pine" checked /> Pine<br />
+                        <input type="radio" id="material" name="material" value="Pine" /> Pine<br />
                         <input type="radio" id="material" name="material" value="Ebony" /> Ebony<br />
                         <input type="radio" id="material" name="material" value="Maple" /> Maple<br />
                         <input type="radio" id="material" name="material" value="Cherry" /> Cherry
@@ -213,17 +214,11 @@
                         <input type="radio" id="shipping" name="shipping" value="3" /> 3 Days<br />
                         <input type="radio" id="shipping" name="shipping" value="5" /> 5 Days<br />
                         <input type="radio" id="shipping" name="shipping" value="7" /> 7 Days<br />
-                        <input type="radio" id="shipping" name="shipping" value="14" checked /> 14 Days<br />
+                        <input type="radio" id="shipping" name="shipping" value="14" /> 14 Days<br />
                         @Html.ValidationMessage("Shipping")
                     </fieldset>
                 </div>
             </div>
-            <div class="inputwrap">
-                <div class="labelwrap"><label for="shipping">Total Cost:</label></div>
-                <input type="text" id="cost" name="cost" value="@Request.Form["Cost"]" readonly />
-                @Html.ValidationMessage("Cost")
-            </div>
-
 
             <p><input type="submit" name="buttonSubmit" value="Add Order" /></p>
         </fieldset>

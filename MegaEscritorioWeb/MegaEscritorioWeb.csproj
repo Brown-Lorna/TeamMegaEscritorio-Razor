@@ -92,6 +92,8 @@
     <Content Include="packages.config" />
     <Content Include="MegaEscritorio.cshtml" />
     <Content Include="AddOrder.cshtml" />
+    <Content Include="EditOrder.cshtml" />
+    <Content Include="DeleteOrder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
