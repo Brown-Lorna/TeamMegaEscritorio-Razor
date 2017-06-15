@@ -1,9 +1,128 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var name = "";
+    var deskWidth = 0;
+    var deskDepth = 0;
+    var numDrawer = 0;
+    var deskMaterial = "";
+    var shipDays = 0;
+    string cost = "";
+    string cost2 = "";
+    var orderId = "";
+    var date = "";
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+        {
+            orderId = Request.QueryString["ID"];
+            var db = Database.Open("MegaEscritorioOrders");
+            var dbCommand = "SELECT * FROM Orders WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, orderId);
+            name = row.Name;
+            deskWidth = Convert.ToInt32(row.Width);
+            deskDepth = Convert.ToInt32(row.Depth);
+            numDrawer = Convert.ToInt32(row.Drawers);
+            deskMaterial = row.Material;
+            shipDays = Convert.ToInt32(row.Shipping);
+            cost = Convert.ToString(row.Cost);
+            date = Convert.ToString(row.Date);
+
+            if (row != null)
+            {
+                name = row.Name;
+                deskWidth = Convert.ToInt32(row.Width);
+                deskDepth = Convert.ToInt32(row.Depth);
+                numDrawer = Convert.ToInt32(row.Drawers);
+                deskMaterial = row.Material;
+                shipDays = Convert.ToInt32(row.Shipping);
+                cost = Convert.ToString(row.Cost);
+                date = Convert.ToString(row.Date);
+            }
+            else
+            {
+                Validation.AddFormError("No order was found for that ID.");
+            }
+
+        }
+        else
+        {
+            Validation.AddFormError("No order was selected.");
+        }
+    }
+
+    if (IsPost && !Request["buttonDelete"].IsEmpty())
+    {
+        orderId = Request.Form["orderId"];
+        var db = Database.Open("MegaEscritorioOrders");
+        var deleteCommand = "DELETE FROM Orders WHERE ID = @0";
+        db.Execute(deleteCommand, orderId);
+        Response.Redirect("~/MegaEscritorio");
+    }
+
+}
+<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <meta charset="utf-8" />
+    <title>Delete an Order</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
+    <h1>Delete an Order</h1>
+    @Html.ValidationSummary()
+    <p><a href="~/MegaEscritorio">Return to order list</a></p>
+
+    <form method="post">
+        <fieldset>
+            <legend>Order Information</legend>
+
+            <p>
+                <span>Name:</span>
+                <span>@name</span>
+            </p>
+
+            <p>
+                <span>Desk Width:</span>
+                <span>@deskWidth</span>
+            </p>
+
+            <p>
+                <span>Desk Depth:</span>
+                <span>@deskDepth</span>
+            </p>
+
+            <p>
+                <span>Number of Drawers:</span>
+                <span>@numDrawer</span>
+            </p>
+
+            <p>
+                <span>Desk Material:</span>
+                <span>@deskMaterial</span>
+            </p>
+
+            <p>
+                <span>Shipping Terms:</span>
+                <span>@shipDays</span><span> Days</span>
+            </p>
+
+            <p>
+                <span>Cost:</span>
+                <span>$</span><span>@cost</span><span>.00</span>
+            </p>
+
+            <p>
+                <span>Date:</span>
+                <span>@date</span>
+            </p>
+
+            <input type="hidden" name="orderid" value="@orderId" />
+            <p><input type="submit" name="buttonDelete" value="Delete Order" /></p>
+        </fieldset>
+    </form>
+
+    <p><a href="~/MegaEscritorio">Return to order list</a></p>
 
 </body>
 </html>
+
