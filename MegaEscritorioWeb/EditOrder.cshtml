@@ -301,77 +301,163 @@
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-    <h1>Edit an Order</h1>
-    @Html.ValidationSummary()
-    <form method="post">
-        <fieldset>
-            <legend>Order Information</legend>
+    @RenderPage("~/shared/_header.cshtml")
+    <main>
+        <h2>Edit an Order</h2>
+        @Html.ValidationSummary()
+        <form method="post">
+            <fieldset class="mainfieldset">
+                <legend>Order Information</legend>
+                <div class="input-main">
+                    <div class="inputwrap">
+                        <div class="labelwrap"><label for="name">Customer Name:</label></div>
+                        <input type="text" id="name" name="name" value="@name" />
+                        @Html.ValidationMessage("Name")
+                    </div>
 
-            <div class="inputwrap">
-                <div class="labelwrap"><label for="name">Customer Name:</label></div>
-                <input type="text" id="name" name="name" value="@name" />
-                @Html.ValidationMessage("Name")
-            </div>
+                    <div class="inputwrap">
+                        <div class="labelwrap"><label for="width">Width:</label></div>
+                        <input type="text" id="width" name="width" value="@deskWidth" />
+                        @Html.ValidationMessage("Width")
+                    </div>
 
-            <div class="inputwrap">
-                <div class="labelwrap"><label for="width">Width:</label></div>
-                <input type="text" id="width" name="width" value="@deskWidth" />
-                @Html.ValidationMessage("Width")
-            </div>
+                    <div class="inputwrap">
+                        <div class="labelwrap"><label for="depth">Depth:</label></div>
+                        <input type="text" id="depth" name="depth" value="@deskDepth" />
+                        @Html.ValidationMessage("Depth")
+                    </div>
 
-            <div class="inputwrap">
-                <div class="labelwrap"><label for="depth">Depth:</label></div>
-                <input type="text" id="depth" name="depth" value="@deskDepth" />
-                @Html.ValidationMessage("Depth")
-            </div>
-
-            <div class="inputwrap">
-                <div class="labelwrap"><label for="drawers">Number of Drawers:</label></div>
-                <input type="number" id="drawers" name="drawers" value="@numDrawer" min="0" max="7" />
-                @Html.ValidationMessage("Drawers")
-            </div>
-
-
-            <div class="radio-panel">
-                <div class="radiowrap">
-                    <fieldset>
-                        <legend>Desk Materials:</legend>
-                        <input type="radio" id="material" name="material" value="Oak" @OakCheckedMsg/> Oak<br />
-                        <input type="radio" id="material" name="material" value="Laminate" @LamCheckedMsg/> Laminate<br />
-                        <input type="radio" id="material" name="material" value="Pine" @PineCheckedMsg/> Pine<br />
-                        <input type="radio" id="material" name="material" value="Ebony" @EbonyCheckedMsg/> Ebony<br />
-                        <input type="radio" id="material" name="material" value="Maple" @MapleCheckedMsg/> Maple<br />
-                        <input type="radio" id="material" name="material" value="Cherry" @CherryCheckedMsg/> Cherry
-                        @Html.ValidationMessage("Material")
-                    </fieldset>
+                    <div class="inputwrap">
+                        <div class="labelwrap"><label for="drawers">Number of Drawers:</label></div>
+                        <input type="number" id="drawers" name="drawers" value="@numDrawer" min="0" max="7" />
+                        @Html.ValidationMessage("Drawers")
+                    </div>
                 </div>
+                    <div class="deskimage">
+                        <img src="../images/desk.png" alt="desk" />
+                    </div>
+                    <div class="radio-panel">
+                        <div class="radiowrap">
+                            <div id="woodimage"></div>
+                            <fieldset>
+                                <legend>Desk Materials:</legend>
+                                <input type="radio" id="material" name="material" value="Oak" @OakCheckedMsg onClick="MAT(this.value);" /> Oak<br />
+                                <input type="radio" id="material" name="material" value="Laminate" @LamCheckedMsg onClick="MAT(this.value);" /> Laminate<br />
+                                <input type="radio" id="material" name="material" value="Pine" @PineCheckedMsg onClick="MAT(this.value);" /> Pine<br />
+                                <input type="radio" id="material" name="material" value="Ebony" @EbonyCheckedMsg onClick="MAT(this.value);" /> Ebony<br />
+                                <input type="radio" id="material" name="material" value="Maple" @MapleCheckedMsg onClick="MAT(this.value);" /> Maple<br />
+                                <input type="radio" id="material" name="material" value="Cherry" @CherryCheckedMsg onClick="MAT(this.value);" /> Cherry
+                                @Html.ValidationMessage("Material")
+                            </fieldset>
+                        </div>
 
 
-                <div class="radiowrap">
-                    <fieldset>
-                        <legend>Shipping Terms:</legend>
-                        <input type="radio" id="shipping" name="shipping" value="3" @ThreeCheckedMsg /> 3 Days<br />
-                        <input type="radio" id="shipping" name="shipping" value="5" @FiveCheckedMsg /> 5 Days<br />
-                        <input type="radio" id="shipping" name="shipping" value="7" @SevenCheckedMsg /> 7 Days<br />
-                        <input type="radio" id="shipping" name="shipping" value="14" @FourteenCheckedMsg /> 14 Days<br />
-                        @Html.ValidationMessage("Shipping")
-                    </fieldset>
-                </div>
-            </div>
+                        <div class="radiowrap">
+                            <div id="shipimage"></div>
+                            <fieldset>
+                                <legend>Shipping Terms:</legend>
+                                <input type="radio" id="shipping" name="shipping" value="3" @ThreeCheckedMsg onClick="SHP(this.value);" /> 3 Days<br />
+                                <input type="radio" id="shipping" name="shipping" value="5" @FiveCheckedMsg onClick="SHP(this.value);" /> 5 Days<br />
+                                <input type="radio" id="shipping" name="shipping" value="7" @SevenCheckedMsg onClick="SHP(this.value);" /> 7 Days<br />
+                                <input type="radio" id="shipping" name="shipping" value="14" @FourteenCheckedMsg onClick="SHP(this.value);" /> 14 Days<br />
+                                @Html.ValidationMessage("Shipping")
+                            </fieldset>
+                        </div>
+                    </div>
 
-            <div class="inputwrap">
-                <div class="labelwrap"><label for="cost">Order Cost:</label></div>
-                <input type="text" id="cost" name="cost" value="@cost" />
-                @Html.ValidationMessage("Drawers")
-            </div>
+                    <div class="inputwrap">
+                        <div class="labelwrap"><label for="cost">Order Cost:</label></div>
+                        <input type="text" id="cost" name="cost" value="@cost" />
+                        @Html.ValidationMessage("Drawers")
+                    </div>
 
-            <input type="hidden" name="orderId" value="@orderId" />
+                    <input type="hidden" name="orderId" value="@orderId" />
 
-            <p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
-        </fieldset>
-    </form>
+                    <p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
+</fieldset>
+        </form>
 
-    <p><a href="~/MegaEscritorio">Return to scripture listing</a></p>
+        <p><a href="~/MegaEscritorio">Return to scripture listing</a></p>
+    </main>
+    @RenderPage("~/shared/_footer.cshtml")
+
+    <script>
+
+        function MAT(bg) {
+            var url;
+
+            if (bg == "Oak") {
+                url = "http://localhost:58612/images/oak.jpg";
+                document.getElementById("woodimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+
+            else if (bg == "Laminate") {
+                url = "http://localhost:58612/images/laminate.jpg";
+                document.getElementById("woodimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+            else if (bg == "Pine") {
+                url = "http://localhost:58612/images/pine.jpg";
+                document.getElementById("woodimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+            else if (bg == "Ebony") {
+                url = "http://localhost:58612/images/ebony.jpg";
+                document.getElementById("woodimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+            else if (bg == "Maple") {
+                url = "http://localhost:58612/images/maple.jpg";
+                document.getElementById("woodimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+            else if (bg == "Cherry") {
+                url = "http://localhost:58612/images/cherry.jpg";
+                document.getElementById("woodimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+            else {
+                url = "http://localhost:58612/images/default.jpg";
+                document.getElementById("woodimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+        }
+
+        function SHP(bg) {
+            var url;
+
+            if (bg == "3") {
+                url = "http://localhost:58612/images/3.png";
+                document.getElementById("shipimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+
+            else if (bg == "5") {
+                url = "http://localhost:58612/images/5.png";
+                document.getElementById("shipimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+            else if (bg == "7") {
+                url = "http://localhost:58612/images/7.png";
+                document.getElementById("shipimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+            else if (bg == "14") {
+                url = "http://localhost:58612/images/14.png";
+                document.getElementById("shipimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+
+            else {
+                url = "http://localhost:58612/images/default.jpg";
+                document.getElementById("shipimage").style.backgroundImage = "url(" + url + ")";
+            }
+
+        }
+
+    </script>
+
 
 </body>
 </html>

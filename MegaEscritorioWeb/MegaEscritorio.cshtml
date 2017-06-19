@@ -29,22 +29,23 @@
 
 </head>
 <body>
-    <h1>Mega Escritorio</h1>
-    <form method="get">
-        <div>
-            <label for="searchName">Name to look for: (Leave blank to list all names.) </label>
-            <input type="text" name="searchName" id="searchName" value="" />
-            <input type="Submit" value="Search Names" />
-        </div>
-        <div>
-            <label for="searchMaterial">Material contains the following:</label>
-            <input type="text" name="searchMaterial" id="searchMaterial" value="@Request.QueryString["searchMaterial"]" />
-            <input type="Submit" value="Search Material" /><br />
-        </div>
+    @RenderPage("~/shared/_header.cshtml")
+    <main>
+        <form method="get">
+            <div>
+                <label for="searchName">Name to look for: (Leave blank to list all names.) </label>
+                <input type="text" name="searchName" id="searchName" value="" />
+                <input type="Submit" value="Search Names" />
+            </div>
+            <div>
+                <label for="searchMaterial">Material contains the following:</label>
+                <input type="text" name="searchMaterial" id="searchMaterial" value="@Request.QueryString["searchMaterial"]" />
+                <input type="Submit" value="Search Material" /><br />
+            </div>
 
-    </form>
-    <div class="orderDisplay">
-        @grid.GetHtml(
+        </form>
+        <div class="orderDisplay">
+            @grid.GetHtml(
 
      tableStyle: "grid",
      headerStyle: "head",
@@ -63,11 +64,12 @@
         )
        )
 
-    </div>
+        </div>
 
-    <p>
-        <a href="~/AddOrder">Add an order</a>
-    </p>
-
+        <p>
+            <a href="~/AddOrder">Add an order</a>
+        </p>
+    </main>
+    @RenderPage("~/shared/_footer.cshtml")
 </body>
 </html>

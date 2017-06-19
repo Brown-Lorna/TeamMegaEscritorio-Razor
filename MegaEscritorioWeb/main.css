@@ -1,14 +1,78 @@
-﻿@import url('https://fonts.googleapis.com/css?family=Italianno|Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Pirata+One|Roboto|UnifrakturCook:700|Slabo+27px');
 body {
-    width: 810px;
+
     margin: 0 auto;
-    font-family: 'Slabo 27px', serif;
+    font-family: 'Roboto', serif;
+}
+
+main {
+    margin: 0 auto;
+    max-width: 810px; 
+}
+
+footer {
+
+    background: #555;
+    width: 100%;
+    height: 500px;
+}
+
+.copyright {
+    padding-top: 20px;    
+    text-align: center;
+    
+}
+
+.footercontainer {
+    margin: 0 auto;    
+    max-width: 810px;
+
+}
+
+#banner {
+    background: #555;
+    max-width: 100%;
+}
+
+#upperBannerWrap {
+    display: flex;
+    margin: 0 auto;
+    max-width: 810px; 
+
+}
+
+.textbox {
+    margin-left:5%;
+
+    color: #fff;
+}
+
+nav {
+    width: 100%;
+    color:#FFF;
+    background: black; 
+}
+
+ul {
+    margin: 0 auto;
+    max-width: 810px;
+    display: flex;
+    list-style-type: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+nav li a {
+    padding-left: 0px;
+    padding-right: 65px;
+    text-decoration: none;
+    flex-wrap: wrap;
+    color: #FFF;
 }
 
 h1 {
-    font-family:  'Italianno', cursive;
+    font-family:  'UnifrakturCook', cursive;
     font-size: 3.0em;
-    text-align: center;
     position: relative;
     top: 30px;
 }
@@ -20,13 +84,46 @@ form p {
 }
 
 
-form div {
+form {
     display: flex;
     flex-flow: wrap;
-    justify-content: flex-end;
-    /* border: 1px solid red; */
-    padding: 5px 5px;
-    margin: 10px 4px;
+    width: 100%;
+    justify-content: center;
+}
+
+.mainfieldset {
+    border: 1px solid cyan;
+    display: flex;
+    flex-flow: wrap;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.radio-panel {
+   display: flex;
+   justify-content: flex-start; 
+}
+
+.radiowrap {
+    display: flex;
+    flex-flow: wrap;
+    align-content: flex-start;
+    /* border: 1px solid green; */
+    justify-content: space-between;
+    font-size: .9em;
+}
+
+.radiowrap #woodimage {
+    
+    position:relative;
+    top: 15px;
+}
+
+.radiowrap #shipimage {
+    position:relative;
+    top: 15px;
+
 }
 
 form input {
@@ -35,28 +132,49 @@ form input {
     
 }
 
+.input-main {
+    display: flex;
+    flex-flow: wrap;
+    max-width: 100%;
+    /* border: 1px solid blue; */
+    justify-content: space-between;
+}
+
 .inputwrap {
     display: flex;
     flex-flow: wrap;
-    /* background: red; */
-    width: 500px;
+    /*background: red;  */
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    font-size: .9em;
     justify-content: flex-start;
-    align-items: baseline;
-    padding-top: 0px;
-    padding-bottom: 0px;
 }
 
-.labelwrap{
-    
-    width: 50px;
-}
 
 .inputwrap input {
-    
+    /* background: lightblue; */
     height: 20px;
+    width: 25%;
+    align-self: flex-end;
+    text-align: left;
 
+}
+
+.labelwrap {
+    display: flex;
+    justify-content: flex-start;
+    /* background: yellow; */
+    max-width: 35%;
+}
+
+.labelwrap label{
+    text-align: left;
     
 }
+
+
 
 
 
@@ -65,12 +183,14 @@ form input {
 .grid {
     margin: 4px;
     border-collapse: collapse;
-    width: 800px;
+    width: 100%;
 }
 
     .grid th, .grid td {
         border: 1px solid #C0C0C0;
         padding: 5px;
+        max-width: 20%;
+        min-width: 1%;
     }
 
 
@@ -103,4 +223,46 @@ form input {
     font-weight: bold;
     margin: 12px;
 }
+
+#woodimage {
+    width: 120px;
+    height: 120px;
+    margin: 0px;
+    /* border: 1px solid black; */
+    background-repeat: no-repeat;
+}
+
+#shipimage {
+    width: 120px;
+    height: 120px;
+    margin: 0px;
+    /* border: 1px solid black; */
+    background-repeat: no-repeat;
+}
+
+p input{
+    
+    margin-right: 50%;
+    
+}
+
+.deskimage {
+    display: flex;
+    align-content: center;
+    width: 20vw;
+    height: 20vw;
+    display: flex;
+    /* border: 1px solid orange; */
+    width: 300px;
+}
+
+.deskimage img{
+    width: 300px;
+    align-content: center;
+}
+
+
+
+
+
 
