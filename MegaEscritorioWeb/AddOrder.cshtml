@@ -209,12 +209,12 @@
                         <div id="woodimage"></div>
                         <fieldset>
                             <legend>Desk Materials:</legend>
-                            <input type="radio" id="material" name="material" value="Oak" onClick="MAT(this.value);" /> Oak<br />
-                            <input type="radio" id="material" name="material" value="Laminate" onClick="MAT(this.value);" /> Laminate<br />
-                            <input type="radio" id="material" name="material" value="Pine" onClick="MAT(this.value);" /> Pine<br />
-                            <input type="radio" id="material" name="material" value="Ebony" onClick="MAT(this.value);" /> Ebony<br />
-                            <input type="radio" id="material" name="material" value="Maple" onClick="MAT(this.value);" /> Maple<br />
-                            <input type="radio" id="material" name="material" value="Cherry" onClick="MAT(this.value);" /> Cherry
+                            <input type="radio" id="oak" name="material" value="Oak" onClick="MAT(this.value);" /> Oak<br />
+                            <input type="radio" id="laminate" name="material" value="Laminate" onClick="MAT(this.value);" /> Laminate<br />
+                            <input type="radio" id="pine" name="material" value="Pine" onClick="MAT(this.value);" /> Pine<br />
+                            <input type="radio" id="ebony" name="material" value="Ebony" onClick="MAT(this.value);" /> Ebony<br />
+                            <input type="radio" id="maple" name="material" value="Maple" onClick="MAT(this.value);" /> Maple<br />
+                            <input type="radio" id="cherry" name="material" value="Cherry" onClick="MAT(this.value);" /> Cherry
                             @Html.ValidationMessage("Material")
                         </fieldset>
                     </div>
@@ -224,10 +224,10 @@
                         <div id="shipimage"></div>
                         <fieldset>
                             <legend>Shipping Terms:</legend>
-                            <input type="radio" id="shipping" name="shipping" value="3" onClick="SHP(this.value);"/> 3 Days<br />
-                            <input type="radio" id="shipping" name="shipping" value="5" onClick="SHP(this.value);"/> 5 Days<br />
-                            <input type="radio" id="shipping" name="shipping" value="7" onClick="SHP(this.value);"/> 7 Days<br />
-                            <input type="radio" id="shipping" name="shipping" value="14" onClick="SHP(this.value);"/> 14 Days<br />
+                            <input type="radio" id="3" name="shipping" value="3" onClick="SHP(this.value);"/> 3 Days<br />
+                            <input type="radio" id="5" name="shipping" value="5" onClick="SHP(this.value);"/> 5 Days<br />
+                            <input type="radio" id="7" name="shipping" value="7" onClick="SHP(this.value);"/> 7 Days<br />
+                            <input type="radio" id="14" name="shipping" value="14" onClick="SHP(this.value);"/> 14 Days<br />
                             @Html.ValidationMessage("Shipping")
                         </fieldset>
                     </div>

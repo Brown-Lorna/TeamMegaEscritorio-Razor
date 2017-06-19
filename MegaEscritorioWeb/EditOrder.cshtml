@@ -341,12 +341,12 @@
                             <div id="woodimage"></div>
                             <fieldset>
                                 <legend>Desk Materials:</legend>
-                                <input type="radio" id="material" name="material" value="Oak" @OakCheckedMsg onClick="MAT(this.value);" /> Oak<br />
-                                <input type="radio" id="material" name="material" value="Laminate" @LamCheckedMsg onClick="MAT(this.value);" /> Laminate<br />
-                                <input type="radio" id="material" name="material" value="Pine" @PineCheckedMsg onClick="MAT(this.value);" /> Pine<br />
-                                <input type="radio" id="material" name="material" value="Ebony" @EbonyCheckedMsg onClick="MAT(this.value);" /> Ebony<br />
-                                <input type="radio" id="material" name="material" value="Maple" @MapleCheckedMsg onClick="MAT(this.value);" /> Maple<br />
-                                <input type="radio" id="material" name="material" value="Cherry" @CherryCheckedMsg onClick="MAT(this.value);" /> Cherry
+                                <input type="radio" id="oak" name="material" value="Oak" @OakCheckedMsg onClick="MAT(this.value);" /> Oak<br />
+                                <input type="radio" id="laminate" name="material" value="Laminate" @LamCheckedMsg onClick="MAT(this.value);" /> Laminate<br />
+                                <input type="radio" id="pine" name="material" value="Pine" @PineCheckedMsg onClick="MAT(this.value);" /> Pine<br />
+                                <input type="radio" id="ebony" name="material" value="Ebony" @EbonyCheckedMsg onClick="MAT(this.value);" /> Ebony<br />
+                                <input type="radio" id="maple" name="material" value="Maple" @MapleCheckedMsg onClick="MAT(this.value);" /> Maple<br />
+                                <input type="radio" id="cherry" name="material" value="Cherry" @CherryCheckedMsg onClick="MAT(this.value);" /> Cherry
                                 @Html.ValidationMessage("Material")
                             </fieldset>
                         </div>
@@ -356,10 +356,10 @@
                             <div id="shipimage"></div>
                             <fieldset>
                                 <legend>Shipping Terms:</legend>
-                                <input type="radio" id="shipping" name="shipping" value="3" @ThreeCheckedMsg onClick="SHP(this.value);" /> 3 Days<br />
-                                <input type="radio" id="shipping" name="shipping" value="5" @FiveCheckedMsg onClick="SHP(this.value);" /> 5 Days<br />
-                                <input type="radio" id="shipping" name="shipping" value="7" @SevenCheckedMsg onClick="SHP(this.value);" /> 7 Days<br />
-                                <input type="radio" id="shipping" name="shipping" value="14" @FourteenCheckedMsg onClick="SHP(this.value);" /> 14 Days<br />
+                                <input type="radio" id="3" name="shipping" value="3" @ThreeCheckedMsg onClick="SHP(this.value);" /> 3 Days<br />
+                                <input type="radio" id="5" name="shipping" value="5" @FiveCheckedMsg onClick="SHP(this.value);" /> 5 Days<br />
+                                <input type="radio" id="7" name="shipping" value="7" @SevenCheckedMsg onClick="SHP(this.value);" /> 7 Days<br />
+                                <input type="radio" id="14" name="shipping" value="14" @FourteenCheckedMsg onClick="SHP(this.value);" /> 14 Days<br />
                                 @Html.ValidationMessage("Shipping")
                             </fieldset>
                         </div>
